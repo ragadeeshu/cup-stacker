@@ -5,9 +5,8 @@ COPY go.mod ./
 COPY go.sum ./
 RUN go mod download && go mod verify
 
-COPY stack.go ./
+COPY main.go ./
 
-RUN ls -al
 RUN go build
 
 EXPOSE 8080

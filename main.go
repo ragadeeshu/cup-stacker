@@ -39,19 +39,6 @@ func canStack(cup, cupToStack cup) bool {
 }
 
 func main() {
-
-	// stack := stack{
-	// 	{8, false},
-	// 	{7, false},
-	// 	{3, false},
-	// 	{6, true},
-	// 	{5, true},
-	// 	{4, false},
-	// 	{1, true},
-	// 	{2, false},
-	// }
-	// renderStack(stack)
-
 	port := flag.String("port", "8080", "Port to bind to")
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +73,7 @@ func main() {
 	}
 
 	http.HandleFunc("/", handler)
+	fmt.Println("ALIVE")
 	log.Fatal(http.ListenAndServe(":"+*port, nil))
 }
 
