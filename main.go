@@ -40,6 +40,7 @@ func canStack(cup, cupToStack cup) bool {
 
 func main() {
 	port := flag.String("port", "8080", "Port to bind to")
+	flag.Parse()
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
