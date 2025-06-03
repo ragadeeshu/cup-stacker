@@ -74,7 +74,6 @@ func main() {
 	}
 
 	http.HandleFunc("/", handler)
-	fmt.Println("ALIVE")
 	log.Fatal(http.ListenAndServe(":"+*port, nil))
 }
 
@@ -263,6 +262,9 @@ func parseStack(stack string) (parsedCups stack, err error) {
 		}
 		ordinal, err := strconv.Atoi(c)
 		if err != nil {
+			return nil, err
+		}
+		if ordinal <= 0 {
 			return nil, err
 		}
 		parsedCups = append(parsedCups, cup{ordinal: ordinal, flipped: flipped})

@@ -19,6 +19,36 @@ func findStacks(numCups int) []stack {
 	return stackRemainingCups([]cup{}, cupsToStack)
 }
 
+func findSubsetStacks(numCups int) []stack {
+	var cupsToStack []int
+	for i := 1; i <= numCups; i++ {
+		cupsToStack = append(cupsToStack, i)
+	}
+	powerSet := getPowerSet(cupsToStack, 0, nil)
+	var stacks []stack
+	for _, set := range powerSet {
+		stacks = append(stacks, stackRemainingCups([]cup{}, set)...)
+	}
+	return stacks
+}
+
+func getPowerSet(cupsToStack []int, index int, setSoFar []int) (powerSets [][]int) {
+	if index == len(cupsToStack) {
+		if setSoFar != nil {
+			// fmt.Printf("non-NilSet %v\n", setSoFar)
+			powerSets = append(powerSets, setSoFar)
+		}
+	} else {
+		// fmt.Printf("Not including %d\n", cupsToStack[index])
+		powerSets = append(powerSets, getPowerSet(cupsToStack, index+1, setSoFar)...)
+		setSoFar = append(setSoFar, cupsToStack[index])
+		// fmt.Printf("Including %d\n", cupsToStack[index])
+		powerSets = append(powerSets, getPowerSet(cupsToStack, index+1, setSoFar)...)
+
+	}
+	return powerSets
+}
+
 func stackRemainingCups(stackedCups []cup, cupsToStack []int) (foundStacks []stack) {
 	for _, cupOrdinalToStack := range cupsToStack {
 		for _, flipped := range []bool{false, true} {
@@ -63,6 +93,10 @@ func main() {
 
 	stacks := findStacks(8)
 	fmt.Println(len(stacks))
-	fmt.Println(stacks)
+	// fmt.Println(stacks)
+
+	stacks = findSubsetStacks(8)
+	fmt.Println(len(stacks))
+	// fmt.Println(stacks)
 
 }
